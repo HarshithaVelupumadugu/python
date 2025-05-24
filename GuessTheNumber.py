@@ -1,30 +1,40 @@
 import random
 
-def get_computer_choice():
-    choices = ["rock", "paper", "scissors"]
-    return random.choice(choices)
+def guess_the_number():
+    number_to_guess = random.randint(1, 100)
+    attempts = 0
 
-def determine_winner(user_choice, computer_choice):
-    if user_choice == computer_choice:
-        return "It's a tie!"
-    elif (user_choice == "rock" and computer_choice == "scissors") or \
-         (user_choice == "scissors" and computer_choice == "paper") or \
-         (user_choice == "paper" and computer_choice == "rock"):
-        return "You win!"
-    else:
-        return "Computer wins!"
+    print("Welcome to the Guess the Number game!")
+    print("I'm thinking of a number between 1 and 100.")
 
-def play_game():
     while True:
-        user_choice = input("Enter your choice (rock, paper, scissors) or 'q' to quit: ").lower()
-        if user_choice == 'q':
+        user_guess = input("Enter your guess (or 'q' to quit): ")
+
+        if user_guess.lower() == 'q':
+            print(f"Okay, the number was {number_to_guess}. Thanks for playing!")
             break
-        elif user_choice not in ["rock", "paper", "scissors"]:
-            print("Invalid choice. Please try again.")
+
+        try:
+            user_guess = int(user_guess)
+        except ValueError:
+            print("Invalid input! Please enter a number or 'q' to quit.")
             continue
-        computer_choice = get_computer_choice()
-        print(f"\nYou chose {user_choice}, computer chose {computer_choice}.")
-        print(determine_winner(user_choice, computer_choice))
+
+        if user_guess < 1 or user_guess > 100:
+            print("Please enter a number between 1 and 100.")
+            continue
+
+        attempts += 1
+
+        if user_guess == number_to_guess:
+            print(f"Congratulations! You've guessed the number in {attempts} attempts.")
+            break
+        elif user_guess < number_to_guess:
+            print("Too low! Try again.")
+        else:
+            print("Too high! Try again.")
 
 if _name_ == "_main_":
-    play_game()
+    guess_the_number()
+  
+
